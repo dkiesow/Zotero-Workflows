@@ -4,7 +4,7 @@ ZotGroupNotes
 These are basic scripts I am using to facilitate my Zotero document workflow.
 
 ZotSearchNotes allows the creation of exported research notes based on a search term
-ZotCollectionNotes allows exported research notes from a given Zotero group
+ZotGroupNotes allows exported research notes from a given Zotero group
 
 Setup for both is the same:
 
