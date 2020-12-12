@@ -1,6 +1,12 @@
 ZotSearchNotes
+ZotGroupNotes
 
-This is a basic script I am using to facilitate my Zotero document workflow.
+These are basic scripts I am using to facilitate my Zotero document workflow.
+
+ZotSearchNotes allows the creation of exported research notes based on a search term
+ZotCollectionNotes allows exported research notes from a given Zotero group
+
+Setup for both is the same:
 
 Requirements:
 Zotero https://www.zotero.org/
@@ -9,6 +15,8 @@ PyZotero https://pypi.org/project/Pyzotero/
 Python 3
 
 In Zotero you need some familiarity with the API set-up and how to get an API key from the website
+Your userID is also needed and available on the site. Create a key and find your ID here:
+https://www.zotero.org/settings/keys
 
 Go to the ZotFile site and install the Add-on into Zotero
 Open up any PDF and highlight the text and/or leaving comments via the PDF annotation tools
@@ -18,16 +26,15 @@ A notes file called "Extracted Annotations" will appear as a child attachment to
 On your local machine, you will need to install PyZotero and all of the related steps to have a working
 Python development environment
 
+Download config_sample.py and rename to config.py
+Enter the required info into config.py
+
 Download ZotSearchNotes.Py
 Uncomment line 14 - # searchQuery = sys.argv[1]
 If you leave it commented - the searchQuery you put into config.py will be all it ever looks for
 
-Download config_sample.py and rename to config.py
-Enter the required info into config.py
-
-
 Run the script
-% python ZotSearchNotes.py {searchterm}
+% python ZotGroupNotes.py {searchterm}
 
 After a minute or two an RTF file should appear in the folder you put in config.py
 
@@ -36,8 +43,14 @@ The RTF encoding is liable to fail on the extracts of some notes.
 My Python coding skills are limited, so there are a lot of iterating through lists and other things
 that are really inefficient. Oh well.
 
-I have a similar script that exports notes by Library/Collection that I will upload soon.
+Download ZotGroupNotes.Py
+Enter the required info into config.py
+To find a groupID go to Zotero.com and navigate to a group. The ID is in the URL
 
+Run the script
+% python ZotCollectionNotes.py
 
+After a minute or two an RTF file should appear in the folder you put in config.py. it will
+contain the extracted notes for the library you indicated in config.py
 
 
