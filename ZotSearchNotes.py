@@ -10,8 +10,8 @@ secretKey = cfg.zotSearchNotes["secretKey"]
 filePath = cfg.zotSearchNotes["filePath"]
 searchQuery = cfg.zotSearchNotes["searchQuery"]
 
-# Uncomment the next line to pass in the search term as a command line argument
-# searchQuery = sys.argv[1]
+# Comment out the next line to test using the searchterm in config.py
+searchQuery = sys.argv[1]
 
 zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
 # we now have a Zotero object, zot, and access to all its methods

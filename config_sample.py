@@ -5,7 +5,8 @@ zotsearchNotes = {
 "secretKey": "getfromZotero",
 "filePath": "/Users/path/to/export/rtf/",
 "searchQuery": "innovation",
-},
+}
+
 zotGroupNotes = {
 "userID": "1234",
 "groupID": "5678",
