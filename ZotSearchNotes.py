@@ -5,10 +5,10 @@ import datetime
 import io
 import sys
 
-userID = cfg.zotsearchNotes["userID"]
-secretKey = cfg.zotsearchNotes["secretKey"]
-filePath = cfg.zotsearchNotes["filePath"]
-searchQuery = cfg.zotsearchNotes["searchQuery"]
+userID = cfg.zotSearchNotes["userID"]
+secretKey = cfg.zotSearchNotes["secretKey"]
+filePath = cfg.zotSearchNotes["filePath"]
+searchQuery = cfg.zotSearchNotes["searchQuery"]
 
 # Uncomment the next line to pass in the search term as a command line argument
 # searchQuery = sys.argv[1]

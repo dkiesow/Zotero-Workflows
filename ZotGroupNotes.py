@@ -4,9 +4,9 @@ from pyzotero import zotero
 import datetime
 import io
 
-userID = cfg.zotcollectionNotes["userID"]
-secretKey = cfg.zotcollectionNotes["secretKey"]
-filePath = cfg.zotcollectionNotes["filePath"]
+userID = cfg.zotGroupNotes["userID"]
+secretKey = cfg.zotGroupNotes["secretKey"]
+filePath = cfg.zotGroupNotes["filePath"]
 
 zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order=true')
 # zot = zotero.Zotero('groupID', 'group', 'secretKey','preserve_json_order=true')
