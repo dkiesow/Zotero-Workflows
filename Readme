@@ -33,7 +33,7 @@ After a minute or two an RTF file should appear in the folder you put in config.
 
 At the moment you can only search on single terms "innovation" not "journalism innovation"
 The RTF encoding is liable to fail on the extracts of some notes.
-My Python coding skills are limited, so there are a lot of iterating through Lists and other things
+My Python coding skills are limited, so there are a lot of iterating through lists and other things
 that are really inefficient. Oh well.
 
 I have a similar script that exports notes by Library/Collection that I will upload soon.
