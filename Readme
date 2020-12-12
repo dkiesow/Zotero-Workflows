@@ -1,0 +1,43 @@
+ZotSearchNotes
+
+This is a basic script I am using to facilitate my Zotero document workflow.
+
+Requirements:
+Zotero https://www.zotero.org/
+Zotfile http://zotfile.com/
+PyZotero https://pypi.org/project/Pyzotero/
+Python 3
+
+In Zotero you need some familiarity with the API set-up and how to get an API key from the website
+
+Go to the ZotFile site and install the Add-on into Zotero
+Open up any PDF and highlight the text and/or leaving comments via the PDF annotation tools
+After annotating a PDF, right click:manage attachments:extract annotations
+A notes file called "Extracted Annotations" will appear as a child attachment to the parent item
+
+On your local machine, you will need to install PyZotero and all of the related steps to have a working
+Python development environment
+
+Download ZotSearchNotes.Py
+Uncomment line 14 - # searchQuery = sys.argv[1]
+If you leave it commented - the searchQuery you put into config.py will be all it ever looks for
+
+Download config_sample.py and rename to config.py
+Enter the required info into config.py
+
+
+Run the script
+% python ZotSearchNotes.py {searchterm}
+
+After a minute or two an RTF file should appear in the folder you put in config.py
+
+At the moment you can only search on single terms "innovation" not "journalism innovation"
+The RTF encoding is liable to fail on the extracts of some notes.
+My Python coding skills are limited, so there are a lot of iterating through Lists and other things
+that are really inefficient. Oh well.
+
+I have a similar script that exports notes by Library/Collection that I will upload soon.
+
+
+
+
