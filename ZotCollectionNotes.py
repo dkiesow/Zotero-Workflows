@@ -2,7 +2,7 @@
 import config as cfg
 from pyzotero import zotero
 import datetime
-import codecs
+import io
 
 userID = cfg.zotcollectionNotes["userID"]
 secretKey = cfg.zotcollectionNotes["secretKey"]
@@ -80,7 +80,7 @@ timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 
 rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
 
-f = codecs.open(filePath + collectionTitle + '_excerpts_' + timestamp + '.rtf', 'w', encoding="cp1252")
+f = io.open(filePath + collectionTitle + '_excerpts_' + timestamp + '.rtf', 'w', encoding="cp1252")
 f.write(rtf)
 f.write(output + "\par")
 f.write("}")
