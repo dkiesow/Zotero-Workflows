@@ -58,6 +58,8 @@ for i in range(len(noteItems)):
         '''ID of Parent Document'''
         parentDoc = zot.item(parentID)
         '''Full data for Parent Document'''
+        parentDate = parentDoc['data']['date']
+        '''Get publication date for Parent Document'''
         collectionID = parentDoc['data']['collections'][0]
         '''Get collectionID for Parent Document'''
         collectionParentID = collectionsListKeys[collectionID]['Parent']
@@ -78,7 +80,7 @@ for i in range(len(noteItems)):
             notes.append(package)
         else:
             package = "\\i " + str(
-                breadCrumb) + "\\i0 \\line " + "\\fs28 \\b " + parentTitle + " \\b0 \\fs22 \\line " + parentCreators + " \\line \\fs24 " + notesRaw
+                breadCrumb) + "\\i0 \\line " + "\\fs28 \\b " + parentTitle + " (" + parentDate + ") " + " \\b0 \\fs22 \\line " + parentCreators + " \\line \\fs24 " + notesRaw
             notes.append(package)
             '''Some concatenation and appending to the overall file'''
 
