@@ -8,7 +8,7 @@ import sys
 userID = cfg.zotSearchNotes["userID"]
 secretKey = cfg.zotSearchNotes["secretKey"]
 filePath = cfg.zotSearchNotes["filePath"]
-searchQuery = cfg.zotSearchNotes["searchQuery"]
+# searchQuery = cfg.zotSearchNotes["searchQuery"]
 
 # Comment out the next line to test using the searchterm in config.py
 searchQuery = sys.argv[1]
@@ -18,7 +18,7 @@ zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
 
 collectionsListKeys = {}
 parentID = {}
-searchResult = zot.top(q=searchQuery)
+searchResult = zot.top(q=searchQuery, qmode="everything")
 
 # remove stray itemtypes 'attachment' that may be top level by accident
 indices = [i for i, n in enumerate(searchResult) if n['data']['itemType'] == 'attachment']
