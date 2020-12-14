@@ -5,8 +5,9 @@ These are basic scripts I am using to facilitate my Zotero document workflow.
 
 ZotSearchNotes allows the creation of exported research notes based on a search term
 ZotGroupNotes allows exported research notes from a given Zotero group
+ZotCollectionNotes allows exported research notes from a specific Zotero collection
 
-Setup for both is the same:
+Setup for all three is the same:
 
 Requirements:
 Zotero https://www.zotero.org/
@@ -53,4 +54,18 @@ Run the script
 After a minute or two an RTF file should appear in the folder you put in config.py. it will
 contain the extracted notes for the library you indicated in config.py
 
+Download ZotCollectionNotes.Py
+Enter the required info into config.py
+To find a groupD go to Zotero.com and navigate to a group. The ID is in the URL
 
+Run the script
+% python ZotCollectionNotes.py {"Collection Name"}
+
+You must type the collection name exactly and wrap it in quotes.
+Currently, it will search only in the specified collection, not in any subcollections. You will need to run a
+separate query for each subcollection you need.
+
+After a minute or two an RTF file should appear in the folder you put in config.py. it will
+contain the extracted notes for the collection you indicated in the command line parameter.
+
+FYI: Items are currently limited to 100 per query.
