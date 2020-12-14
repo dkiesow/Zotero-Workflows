@@ -6,50 +6,57 @@ import io
 import sys
 import re
 
-userID = cfg.zotSearchNotes["userID"]
-secretKey = cfg.zotSearchNotes["secretKey"]
-filePath = cfg.zotSearchNotes["filePath"]
-searchQuery = cfg.zotSearchNotes["searchQuery"]
+userID = cfg.zotCollectionNotes["userID"]
+secretKey = cfg.zotCollectionNotes["secretKey"]
+filePath = cfg.zotCollectionNotes["filePath"]
+collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
 
+searchQuery = ""
 # Comment out the next line to test using the searchterm in config.py
-searchQuery = sys.argv[1]
+# searchQuery = sys.argv[1]
 
 zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
 # we now have a Zotero object, zot, and access to all its methods
 
+# create a list of collection keys
+collectionsInfo = zot.collections()
 collectionsListKeys = {}
-parentID = {}
-searchResult = zot.top(q=searchQuery, qmode="everything")
+i = 0
+for i in range(len(collectionsInfo)):
+    collectionsListKeys[(collectionsInfo[i]['data']['key'])] = dict(
+        {'Name': collectionsInfo[i]['data']['name'], 'Parent': collectionsInfo[i]['data']['parentCollection'], 'Key' : collectionsInfo[i]['data']['key']})
+'''
+CollectionsListKeys dict then looks something like
+u'55GCTGSE': {'Name': u'Innovation Theory', 'Parent': False}
+u'789HEDID': {'Name': u'Memory', 'Parent': u'XCNYW8JH'}
+'''
 
-# remove stray itemtypes 'attachment' that may be top level by accident
+for name, key in collectionsListKeys.items():
+    if key['Name'] == collectionQuery:
+        searchQuery = key['Key']
+
+searchResult = zot.collection_items(searchQuery)
+
 indices = [i for i, n in enumerate(searchResult) if n['data']['itemType'] == 'attachment']
 searchResult[:] = [j for i, j in enumerate(searchResult)
                    if i not in indices]
 noteItems = []
 i = 0
 for i in range(len(searchResult)):
-    childHold = zot.children(searchResult[i]['key'])
-    for x in childHold:
-        if "note" in x['data']['itemType']:
-            noteItems.append(x['data'])
+    childHold = searchResult[i]
+    if "note" in childHold['data']['itemType']:
+        noteItems.append(childHold['data'])
 
 # remove notes with 'the following values have no...'
 indices = [i for i, n in enumerate(noteItems) if n['note'].startswith('The following values')]
 noteItems[:] = [j for i, j in enumerate(noteItems)
                 if i not in indices]
 
-# create a list of collection keys for later use
-collectionsListKeys = {}
-collectionsInfo = zot.collections()
-i = 0
-for i in range(len(collectionsInfo)):
-    collectionsListKeys[(collectionsInfo[i]['data']['key'])] = dict(
-        {'Name': collectionsInfo[i]['data']['name'], 'Parent': collectionsInfo[i]['data']['parentCollection']})
-
 # build the body of the file
 notes = []
 notesHold = []
 collectionParentID = []
+parentID = {}
 i = 0
 for i in range(len(noteItems)):
     notesHold = (noteItems[i])
@@ -100,7 +107,7 @@ output = output.replace("\u02C7", "&#728;")
 
 timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
-f = io.open(filePath + searchQuery + '_Zotero_notes_' + timestamp + '.rtf',
+f = io.open(filePath + collectionName + '_Zotero_notes_' + timestamp + '.rtf',
             'w+', encoding="cp1252", )
 f.write(rtf)
 f.write(output + "\par")

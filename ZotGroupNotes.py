@@ -49,7 +49,8 @@ for i in range(len(childItems)):
             '''ID of Parent Document'''
             parentDoc = zot.item(parentID)
             '''Full data for Parent Document'''
-            parentDate = parentDoc['data']['date']
+            match = re.search(r"(?<!\d)\d{4,20}(?!\d)", parentDoc['data']['date'])
+            parentDate = match.group(0) if match else None
             '''Get publication date for Parent Document'''
             collectionID = parentDoc['data']['collections'][0]
             '''Get collectionID for Parent Document'''
