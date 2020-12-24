@@ -9,11 +9,11 @@ import re
 userID = cfg.zotCollectionNotes["userID"]
 secretKey = cfg.zotCollectionNotes["secretKey"]
 filePath = cfg.zotCollectionNotes["filePath"]
-collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
+#collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
 
-searchQuery = ""
 # Comment out the next line to test using the searchterm in config.py
-# searchQuery = sys.argv[1]
+collectionQuery = sys.argv[1]
+searchQuery=""
 
 zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
 # we now have a Zotero object, zot, and access to all its methods
@@ -104,6 +104,8 @@ output = output.replace("<strong>", "\\b ")
 output = output.replace("</strong>", " \\b0")
 output = output.replace("\u02d8", "&#728;")
 output = output.replace("\u02C7", "&#728;")
+output = output.replace("\x8e", "&#x8E;")
+output = output.replace("\u2212", "&#8722;")
 
 timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
