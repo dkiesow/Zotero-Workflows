@@ -109,8 +109,6 @@ output = output.replace("\u2212", "&#8722;")
 output = output.replace("\u2715", "&#10005;")
 output = output.replace("\u03b5", "&#949;")
 
-
-
 timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
 f = io.open(filePath + collectionQuery + '_Zotero_notes_' + timestamp + '.rtf',
