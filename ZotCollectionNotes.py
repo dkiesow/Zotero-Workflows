@@ -10,6 +10,7 @@ userID = cfg.zotCollectionNotes["userID"]
 secretKey = cfg.zotCollectionNotes["secretKey"]
 filePath = cfg.zotCollectionNotes["filePath"]
 #collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
+default = "None"
 
 # Comment out the next line to test using the searchterm in config.py
 collectionQuery = sys.argv[1]
@@ -31,11 +32,11 @@ u'55GCTGSE': {'Name': u'Innovation Theory', 'Parent': False}
 u'789HEDID': {'Name': u'Memory', 'Parent': u'XCNYW8JH'}
 '''
 
-for name, key in collectionsListKeys.items():
-    if key['Name'] == collectionQuery:
-        searchQuery = key['Key']
+for Name, Key in collectionsListKeys.items():
+    if Key['Name'] == collectionQuery:
+        searchQuery = Key['Key']
 
-searchResult = zot.collection_items(searchQuery)
+searchResult = zot.everything(zot.collection_items(searchQuery))
 
 indices = [i for i, n in enumerate(searchResult) if n['data']['itemType'] == 'attachment']
 searchResult[:] = [j for i, j in enumerate(searchResult)
@@ -75,15 +76,15 @@ for i in range(len(noteItems)):
         '''Get ID for Parent Collection'''
         if not str(collectionParentID):
             '''Minor error catching/branch if the collection is the parent'''
-            parentCollectionName = collectionsListKeys[collectionParentID]['Name']
-            breadCrumb = parentCollectionName + "/" + collectionsListKeys[collectionID]['Name']
+            parentCollectionName = collectionsListKeys[collectionParentID]['Name'] if 'Name' in collectionsListKeys[collectionParentID] else default
+            breadCrumb = parentCollectionName + "/" + collectionsListKeys[collectionID]['Name'] if 'Name' in collectionsListKeys[collectionID] else default
             collectionTitle = parentCollectionName
         else:
-            breadCrumb = collectionsListKeys[collectionID]['Name']
+            breadCrumb = collectionsListKeys[collectionID]['Name'] if 'Name' in collectionsListKeys[collectionID] else default
             collectionName = breadCrumb
             collectionTitle = collectionName
-            parentTitle = parentDoc['data']['title']
-            parentCreators = parentDoc['meta']['creatorSummary']
+            parentTitle = parentDoc['data']['title'] if 'title' in parentDoc['data'] else default
+            parentCreators = parentDoc['meta']['creatorSummary'] if 'creatorSummary' in parentDoc['meta'] else default
         if not notesRaw:
             package = "\\i " + "No Notes"
             notes.append(package)
@@ -108,6 +109,8 @@ output = output.replace("\x8e", "&#x8E;")
 output = output.replace("\u2212", "&#8722;")
 output = output.replace("\u2715", "&#10005;")
 output = output.replace("\u03b5", "&#949;")
+output = output.replace("\u0301", "&#769;")
+output = output.replace("\u2192", "&#8594;")
 
 timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
