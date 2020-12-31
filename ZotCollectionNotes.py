@@ -9,12 +9,12 @@ import re
 userID = cfg.zotCollectionNotes["userID"]
 secretKey = cfg.zotCollectionNotes["secretKey"]
 filePath = cfg.zotCollectionNotes["filePath"]
-#collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
+# collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
 default = "None"
 
 # Comment out the next line to test using the searchterm in config.py
 collectionQuery = sys.argv[1]
-searchQuery=""
+searchQuery = ""
 
 zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
 # we now have a Zotero object, zot, and access to all its methods
@@ -25,7 +25,8 @@ collectionsListKeys = {}
 i = 0
 for i in range(len(collectionsInfo)):
     collectionsListKeys[(collectionsInfo[i]['data']['key'])] = dict(
-        {'Name': collectionsInfo[i]['data']['name'], 'Parent': collectionsInfo[i]['data']['parentCollection'], 'Key' : collectionsInfo[i]['data']['key']})
+        {'Name': collectionsInfo[i]['data']['name'], 'Parent': collectionsInfo[i]['data']['parentCollection'],
+         'Key': collectionsInfo[i]['data']['key']})
 '''
 CollectionsListKeys dict then looks something like
 u'55GCTGSE': {'Name': u'Innovation Theory', 'Parent': False}
@@ -76,11 +77,14 @@ for i in range(len(noteItems)):
         '''Get ID for Parent Collection'''
         if not str(collectionParentID):
             '''Minor error catching/branch if the collection is the parent'''
-            parentCollectionName = collectionsListKeys[collectionParentID]['Name'] if 'Name' in collectionsListKeys[collectionParentID] else default
-            breadCrumb = parentCollectionName + "/" + collectionsListKeys[collectionID]['Name'] if 'Name' in collectionsListKeys[collectionID] else default
+            parentCollectionName = collectionsListKeys[collectionParentID]['Name'] \
+                if 'Name' in collectionsListKeys[collectionParentID] else default
+            breadCrumb = parentCollectionName + "/" + collectionsListKeys[collectionID]['Name'] \
+                if 'Name' in collectionsListKeys[collectionID] else default
             collectionTitle = parentCollectionName
         else:
-            breadCrumb = collectionsListKeys[collectionID]['Name'] if 'Name' in collectionsListKeys[collectionID] else default
+            breadCrumb = collectionsListKeys[collectionID]['Name'] \
+                if 'Name' in collectionsListKeys[collectionID] else default
             collectionName = breadCrumb
             collectionTitle = collectionName
             parentTitle = parentDoc['data']['title'] if 'title' in parentDoc['data'] else default
@@ -90,7 +94,8 @@ for i in range(len(noteItems)):
             notes.append(package)
         else:
             package = "\\i " + str(
-                breadCrumb) + "\\i0 \\line " + "\\fs28 \\b " + parentTitle + " (" + parentDate + ") " + " \\b0 \\fs22 \\line " + parentCreators + " \\line \\fs24 " + notesRaw
+                breadCrumb) + "\\i0 \\line " + "\\fs28 \\b " + parentTitle + " (" + parentDate + ") " \
+                      + " \\b0 \\fs22 \\line " + parentCreators + " \\line \\fs24 " + notesRaw
             notes.append(package)
             '''Some concatenation and appending to the overall file'''
 
@@ -113,10 +118,12 @@ output = output.replace("\u0301", "&#769;")
 output = output.replace("\u2192", "&#8594;")
 
 timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
-rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
+rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 " \
+      "Symbol;}{\\f2\\fmodern\\fprq1 Courier New;}{\\f3\\froman Times New Roman;}}{\\colortbl\\red0\\green0\\" \
+      "blue0;\\red0\\green0\\blue255;\\red255\\green0\\blue0;}\\deflang1033\\horzdoc{\\*\\fchars }{\\*\\lchars}"
 f = io.open(filePath + collectionQuery + '_Zotero_notes_' + timestamp + '.rtf',
             'w+', encoding="cp1252", )
 f.write(rtf)
-f.write(output + "\par")
+f.write(output + "\\par")
 f.write("}")
 f.close()
