@@ -18,13 +18,8 @@ res = [sub['data']['name'] for sub in collectionsInfo]
 
 i = 0
 for i in range(len(res)):
-    items.append({"uid": res[i],
-    "title": res[i],
-    "arg": res[i],
-    "subtitle": u'↩ or ⇥ to select',
-    "autocomplete": res[i]
-    })
-
+    items.append({"uid": res[i], "title": res[i], "arg": res[i], "subtitle": u'↩ or ⇥ to select',
+                  "autocomplete": res[i]})
 out = json.dumps(items, sort_keys=True, indent=4)
 export = "{\"items\":" + out + "}"
 print(export)

@@ -11,17 +11,23 @@ secretKey = cfg.zotCollectionNotes["secretKey"]
 filePath = cfg.zotCollectionNotes["filePath"]
 # collectionQuery = cfg.zotCollectionNotes["collectionQuery"]
 default = "None"
+searchQuery = ""
+collectionsListKeys = {}
+noteItems = []
+notes = []
+notesHold = []
+collectionParentID = []
+parentID = {}
 
 # Comment out the next line to test using the searchterm in config.py
 collectionQuery = sys.argv[1]
-searchQuery = ""
 
 zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
 # we now have a Zotero object, zot, and access to all its methods
 
 # create a list of collection keys
 collectionsInfo = zot.collections()
-collectionsListKeys = {}
+
 i = 0
 for i in range(len(collectionsInfo)):
     collectionsListKeys[(collectionsInfo[i]['data']['key'])] = dict(
@@ -42,7 +48,6 @@ searchResult = zot.everything(zot.collection_items(searchQuery))
 indices = [i for i, n in enumerate(searchResult) if n['data']['itemType'] == 'attachment']
 searchResult[:] = [j for i, j in enumerate(searchResult)
                    if i not in indices]
-noteItems = []
 i = 0
 for i in range(len(searchResult)):
     childHold = searchResult[i]
@@ -55,10 +60,6 @@ noteItems[:] = [j for i, j in enumerate(noteItems)
                 if i not in indices]
 
 # build the body of the file
-notes = []
-notesHold = []
-collectionParentID = []
-parentID = {}
 i = 0
 for i in range(len(noteItems)):
     notesHold = (noteItems[i])
