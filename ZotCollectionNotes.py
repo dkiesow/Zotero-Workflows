@@ -90,6 +90,19 @@ for i in range(len(noteItems)):
             collectionTitle = collectionName
             parentTitle = parentDoc['data']['title'] if 'title' in parentDoc['data'] else default
             parentCreators = parentDoc['meta']['creatorSummary'] if 'creatorSummary' in parentDoc['meta'] else default
+            if parentTitle:
+                w = 1
+            else:
+                parentTitle = "No Title"
+            if parentCreators:
+                x = 1
+            else:
+                parentCreators = "No Author"
+            if parentDate:
+                y = 1
+            else:
+                parentDate = "N.d."
+
         if not notesRaw:
             package = "\\i " + "No Notes"
             notes.append(package)
@@ -107,8 +120,13 @@ output = output.replace("\">", "}}{\\fldrslt {")
 output = output.replace("</a>)", "}}}")
 output = output.replace("<p>", "\\line")
 output = output.replace("</p>", "\\line")
+output = output.replace("<br>", "\\line")
 output = output.replace("<strong>", "\\b ")
 output = output.replace("</strong>", " \\b0")
+output = output.replace("<b>", "\\b ")
+output = output.replace("</b>", " \\b0")
+output = output.replace("<i>", "\\i ")
+output = output.replace("</i>", " \\i0")
 output = output.replace("\u02d8", "&#728;")
 output = output.replace("\u02C7", "&#728;")
 output = output.replace("\x8e", "&#x8E;")
@@ -117,6 +135,9 @@ output = output.replace("\u2715", "&#10005;")
 output = output.replace("\u03b5", "&#949;")
 output = output.replace("\u0301", "&#769;")
 output = output.replace("\u2192", "&#8594;")
+output = output.replace("\u25cf", "&#9679;")
+output = output.replace("\u2015", "&#8213;")
+
 
 timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 rtf = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deftab720{\\fonttbl{\\f0\\fswiss MS Sans Serif;}{\\f1\\froman\\fcharset2 " \
