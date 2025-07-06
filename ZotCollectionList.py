@@ -1,25 +1,35 @@
 #!/usr/bin/env python
-import config as cfg
 from pyzotero import zotero
 import json
+from config import ZOTERO_CONFIGS
 
-userID = cfg.zotCollectionNotes["userID"]
-secretKey = cfg.zotCollectionNotes["secretKey"]
-filePath = cfg.zotCollectionNotes["filePath"]
+def safe_utf8(s):
+    try:
+        return str(s).encode('utf-8', errors='replace').decode('utf-8')
+    except Exception:
+        return ''
 
-zot = zotero.Zotero(userID, 'user', secretKey, 'preserve_json_order = true')
-# we now have a Zotero object, zot, and access to all its methods
+def main():
+    zot_config = ZOTERO_CONFIGS["CollectionList"]
+    user_id = zot_config["userID"]
+    secret_key = zot_config["secretKey"]
 
-# create a list of collection keys
-collectionsInfo = zot.collections()
-items = []
+    zot = zotero.Zotero(user_id, 'user', secret_key, preserve_json_order=True)
+    collections_info = zot.collections()
 
-res = [sub['data']['name'] for sub in collectionsInfo]
+    items = [
+        {
+            "uid": safe_utf8(col['data']['name']),
+            "title": safe_utf8(col['data']['name']),
+            "arg": safe_utf8(col['data']['name']),
+            "subtitle": u'↩ or ⇥ to select',
+            "autocomplete": safe_utf8(col['data']['name'])
+        }
+        for col in collections_info
+    ]
 
-i = 0
-for i in range(len(res)):
-    items.append({"uid": res[i], "title": res[i], "arg": res[i], "subtitle": u'↩ or ⇥ to select',
-                  "autocomplete": res[i]})
-out = json.dumps(items, sort_keys=True, indent=4)
-export = "{\"items\":" + out + "}"
-print(export)
+    export = json.dumps({"items": items}, sort_keys=True, indent=4, ensure_ascii=False)
+    print(export)
+
+if __name__ == "__main__":
+    main()
