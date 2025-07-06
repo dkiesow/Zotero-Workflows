@@ -70,7 +70,8 @@ def main():
         notes = []
         for note in note_items:
             notes_raw = note['note']
-            if notes_raw.startswith('<p><strong>Extracted Annotations') or notes_raw.startswith('<p><b>Extracted Annotations'):
+            if notes_raw.startswith('<p><strong>Extracted Annotations') or notes_raw.startswith(
+                    '<p><b>Extracted Annotations'):
                 parent_doc = parent_lookup.get(note['parentItem'])
                 if not parent_doc:
                     continue
@@ -86,14 +87,19 @@ def main():
                 parent_title = parent_doc['data']['title']
                 parent_creators = parent_doc['meta']['creatorSummary']
                 package = (
-                    "\\i " + bread_crumb + "\\i0 \\line " +
-                    "\\fs28 \\b " + parent_title + " (" + parent_date + ") \\b0 \\fs22 \\line " +
-                    parent_creators + " \\line \\fs24 " + notes_raw
+                        "\\i " + bread_crumb + "\\i0 \\line " +
+                        "\\fs28 \\b " + parent_title + " (" + parent_date + ") \\b0 \\fs22 \\line " +
+                        parent_creators + " \\line \\fs24 " + notes_raw
                 ) if notes_raw else "\\i No Notes"
                 notes.append(package)
 
-        output = "\\par".join(notes)
-        output = rtf_replace(output)
+        print(f"Found {len(notes)} notes.")
+
+        if notes:
+            output = "\\par".join(notes)
+            output = rtf_replace(output)
+        else:
+            output = rtf_replace("\\b No Notes Found \\b0")
 
         timestamp = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
         out_path = os.path.join(file_path, f"{search_query}_Zotero_notes_{timestamp}.rtf")
@@ -111,9 +117,6 @@ def main():
             print(f"Output file written successfully: {out_path}")
         except (IOError, OSError) as e:
             print(f"Error writing output file: {e}")
-
-    except Exception as e:
-        print(f"Unexpected error: {e}")
 
 if __name__ == "__main__":
     main()
