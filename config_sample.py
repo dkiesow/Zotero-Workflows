@@ -1,23 +1,29 @@
 #!/usr/bin/env python
 
-zotsearchNotes = {
-"userID": "1234",
-"secretKey": "getfromZotero",
-"filePath": "/Users/path/to/export/rtf/",
-"searchQuery": "innovation",
-}
+# Common configuration values
+USER_ID = "#####"
+GROUP_ID = "#####"
+SECRET_KEY = "Get from Zotero"
+FILE_PATH = "/Users/path/to//Notes/"
 
-zotGroupNotes = {
-"userID": "1234",
-"groupID": "5678",
-"secretKey": "getfromZotero",
-"filePath": "/Users/path/to/export/rtf/",
-}
-
-zotCollectionNotes = {
-"userID": "1234",
-"groupID": "5678",
-"secretKey": "getfromZotero",
-"filePath": "/Users/path/to/export/rtf/",
-"collectionQuery": "Collection Name",
+ZOTERO_CONFIGS = {
+    "searchNotes": {
+        "userID": USER_ID,
+        "secretKey": SECRET_KEY,
+        "filePath": FILE_PATH,
+        "searchQuery": "innovation",
+    },
+    "groupNotes": {
+        "userID": USER_ID,
+        "groupID": GROUP_ID,
+        "secretKey": SECRET_KEY,
+        "filePath": FILE_PATH,
+    },
+    "collectionNotes": {
+        "userID": USER_ID,
+        "groupID": GROUP_ID,
+        "secretKey": SECRET_KEY,
+        "filePath": FILE_PATH,
+       # "collectionQuery": "Mizzou News Deserts",  # Set your default collection name here
+    },
 }
